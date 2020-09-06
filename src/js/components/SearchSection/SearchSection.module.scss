@@ -1,0 +1,50 @@
+@import '../../../sass/main.scss';
+@import '../../../index.scss';
+
+section {
+    margin-top: 0.5rem;
+    &.searchSection {
+        display: flex;
+    }
+}
+
+.buttonSearch{
+    button{
+        background-color: $colorTextOrange;
+        color: $colorAppCream;
+        width: 10rem;         
+        height: 3rem; 
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 0 17px 0 rgba(23,50,68,.17);
+    }
+}
+
+.categorySearch{
+    width: 15%;
+    margin: 0 3%;
+}
+
+@media only screen and (max-width: 1024px){
+    section {
+        &.searchSection {
+            flex-direction: column;
+
+            .categorySearch{
+                margin-bottom: 1rem;
+            }
+        }
+    }
+    
+    .buttonSearch{
+        button{
+            width: 100%;          
+            margin: 2% 0;                   
+        height: 1.5rem; 
+        }
+    }
+    .categorySearch{
+        width: 100%;
+    }
+    
+}

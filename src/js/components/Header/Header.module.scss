@@ -1,0 +1,40 @@
+@import '../../../sass/main.scss';
+
+    .headerMenu {
+        display: flex;
+        justify-content: space-between;
+        height: 2.5rem;
+        left: 0;
+        padding: 21px 0;
+        position: fixed;
+        top: 0;
+        width: 90%;
+        z-index: 1003;
+        margin: 0 5%;
+    }
+
+
+
+.left{
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 100px;
+    height: 77px;
+    margin-left: 1rem;
+}
+
+.shoppingBag, .user {
+    width: 2rem;
+    height: 2rem;
+    margin-left: 1rem;
+}
+
+.right {
+    // width: 40%;
+    display: flex;
+    align-items: center; 
+    justify-content: flex-end;
+}
