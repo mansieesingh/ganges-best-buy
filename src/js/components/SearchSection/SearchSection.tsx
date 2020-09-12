@@ -1,75 +1,104 @@
 import React, { useState } from 'react';
 import styles from './SearchSection.module.scss';
-import Dropdown from '../Dropdown/Dropdown';
+import Expandable from '../Expandable/Expandable';
+import { data } from '../mock_data/selectionData';
 
+interface optionListTwoItems {
+    catgName: string
+    brandNames: Array<string>
+}
+interface optionListOneItems {
+    mainCatgName: string
+    catgslist: Array<optionListTwoItems>
+
+}
 const SearchSection = () => {
-    const [section, setSection] = useState('Select');
-    const [gender, setGender] = useState('Select');
-    const [category, setScategory] = useState('Select');
-    const [brand, setbrand] = useState('Select');
+    const [selectionLevelOne, setSelectionLevelOne] = useState('--Select--');
+    const [selectionLevelTwo, setSelectionLevelTwo] = useState('--Select--');
+    const [selectionLevelThree, setSelectionLevelThree] = useState('--Select--');
+    const [expandOne, setExpandOne] = useState(false);
+    const [expandTwo, setExpandTwo] = useState(false);
+    const [expandThree, setExpandThree] = useState(false);
 
-    const handleSectionChange = (s: string) => {
-        console.log("user section category")
-        setSection(s)
-    }
-    const handleGenderChange = (s: string) => {
-        console.log("user gender category")
-        setGender(s)
-    }
-    const handleCategoryChange = (s: string) => {
-        console.log("user category category")
-        setScategory(s)
-    }
-    const handleBrandChange = (s: string) => {
-        console.log("user brand category")
-        setbrand(s)
+
+    const [optionsListTwo, setOptionsListTwo] = useState(['0'])
+    const [optionsListThree, setOptionsListThree] = useState(['0'])
+
+    const handleSelectionOne = (value: string) => {
+        console.log("CALLED: handleSelectionOne")
+        setSelectionLevelOne(value)
+        setExpandOne(false)
+        let arr = data.filter((item: optionListOneItems) => item.mainCatgName === value)
+        let optionsSecondLevel = arr[0].catgslist.map((itemLevelTwo: optionListTwoItems) => itemLevelTwo.catgName);
+        setOptionsListTwo(optionsSecondLevel)
     }
 
-    const sectionList = ['Western Wear', 'Ehinic Wear', 'Inner Wear', 'Sports Wear']
-    const genderList = ['Women', 'Men', 'Kids']
-    const categoryList = ['T-Shirt', 'Jeans', 'Shirts', 'Tops']
-    const brandList = ['Levi\'s', 'Wrangler', 'Ed Hardy', 'GAP', 'Marks & Spencers']
+    const handleSelectionTwo = (value: string) => {
+        console.log("CALLED: handleSelectionTwo")
+        setSelectionLevelTwo(value)
+        setExpandTwo(false)
+        let arr = data.filter((item: optionListOneItems) => item.mainCatgName === selectionLevelOne)
+        let arr2 = arr[0].catgslist.filter((itemLevelTwo: optionListTwoItems) => itemLevelTwo.catgName === value);
+        let optionsThirdLevel = arr2[0].brandNames;
+        setOptionsListThree(optionsThirdLevel);
+    }
+
+    const handleSelectionThree = (value: string) => {
+        console.log("CALLED: handleSelectionThree")
+        setSelectionLevelThree(value)
+        setExpandThree(false)
+    }
+    const handleClickOne = () => {
+        console.log("CALLED: handleClickOne")
+        let temp = !expandOne;
+        setExpandOne(temp)
+    }
+    const handleClickTwo = () => {
+        console.log("CALLED: handleClickTwo")
+        let temp = !expandTwo;
+        setExpandTwo(temp)
+    }
+    const handleClickThree = () => {
+        console.log("CALLED: handleClickThree")
+        let temp = !expandThree;
+        setExpandThree(temp)
+    }
+
+    const optionsListOne = data.map((item: optionListOneItems) => item.mainCatgName);
 
     return (
         <>
             <section className={styles.searchSection}>
-                <div className={styles.categorySearch}>
-                    <Dropdown 
-                        label='Section'
-                        selected={section}
-                        categoryList={sectionList}
-                        handleChange={handleSectionChange}
-                        />
-                </div>
-                <div className={styles.categorySearch}>
-                    <Dropdown 
-                        label='Gender'
-                        selected={gender}
-                        categoryList={genderList}
-                        handleChange={handleGenderChange}
-                        />
-                </div>
-                <div className={styles.categorySearch}>
-                    <Dropdown 
-                        label='Category'
-                        selected={category}
-                        categoryList={categoryList}
-                        handleChange={handleCategoryChange}
-                        />
-                </div>
-                <div className={styles.categorySearch}>
-                    <Dropdown 
-                        label='Brand'
-                        selected={brand}
-                        categoryList={brandList}
-                        handleChange={handleBrandChange}
-                        />
-                </div>
-               
-                <div className={styles.buttonSearch}>
-                        <button>Search</button>
-                </div>
+                <Expandable
+                    selected={selectionLevelOne}
+                    selectionHandler={handleSelectionOne}
+                    clickHandler={handleClickOne}
+                    expand={expandOne}
+                    optionsList={optionsListOne}
+                />
+                {optionsListTwo[0] !== '0' &&
+                    <Expandable
+                        selected={selectionLevelTwo}
+                        selectionHandler={handleSelectionTwo}
+                        clickHandler={handleClickTwo}
+                        expand={expandTwo}
+                        optionsList={optionsListTwo}
+                    />
+                }
+                {optionsListThree[0] !== '0' &&
+                    <Expandable
+                        selected={selectionLevelThree}
+                        selectionHandler={handleSelectionThree}
+                        clickHandler={handleClickThree}
+                        expand={expandThree}
+                        optionsList={optionsListThree}
+                    />}
             </section>
+            {optionsListThree[0] !== '0' && selectionLevelThree !== '--Select--' && 
+                <section>
+                    <button className={styles.searchButton}>Let's Go!</button>
+                </section>
+            }
         </>
     )
 }

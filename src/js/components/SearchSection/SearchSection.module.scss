@@ -25,6 +25,17 @@ section {
     margin: 0 3%;
 }
 
+.searchButton{
+    background-color: #E74C32;
+    color: #EFEDE1;
+    font-size: 1rem;
+    width: 90%;
+    margin: 5%;
+    height: 3rem;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 17px 0 rgba(23, 50, 68, 0.17);
+}
 @media only screen and (max-width: 1024px){
     section {
         &.searchSection {

@@ -3,16 +3,14 @@
     .headerMenu {
         display: flex;
         justify-content: space-between;
-        height: 2.5rem;
-        left: 0;
-        padding: 21px 0;
+        align-items: center;
+        padding-top: 0.5rem;
         position: fixed;
         top: 0;
-        width: 90%;
+        width: 100%;
         z-index: 1003;
-        margin: 0 5%;
+        box-shadow: 1px 3px 8px 0 rgba(231, 76, 50, 0.3);
     }
-
 
 
 .left{
@@ -23,7 +21,6 @@
 .logo {
     width: 100px;
     height: 77px;
-    margin-left: 1rem;
 }
 
 .shoppingBag, .user {
@@ -37,4 +34,12 @@
     display: flex;
     align-items: center; 
     justify-content: flex-end;
+}
+
+.menuTrigger {
+    margin-left: 5%;
+}
+
+.shoppingBag {
+    margin-right: 5%;
 }
